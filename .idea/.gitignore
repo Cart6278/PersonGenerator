@@ -1,6 +1,7 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+/archive
 # Datasource local storage ignored files
 /../../../../../../:\Documents\OSU-PostBacc_CS\CS_361\PersonGenerator\.idea/dataSources/
 /dataSources.local.xml

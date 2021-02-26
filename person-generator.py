@@ -1,11 +1,13 @@
 # Kirsten Carter
 # Person Generator
 # CS 361 - 400 Winter 2021
+from flask import Flask
+import json
 import tkinter as tk
 import pandas as panda
 import random
 import sys
-import comms_flask
+import urllib.request
 
 
 # this function takes full state names and converts them to their lower case abbreviations
@@ -60,6 +62,7 @@ def csv_wy(find_state, num_gen, rand_addr):
     ting.to_csv('output.csv', index=False)
     return "Output to output.csv is complete"
 
+
 # processing and output for the state of Wyoming due to data lacking important data that breaks .csv input
 def output_wy(state, num_gen, out_csv, state_import):
     find_state = state
@@ -112,6 +115,7 @@ def csv_nm(find_state, num_gen, rand_addr):
     ting.to_csv('output.csv', index=False)
     return "Output to output.csv is complete"
 
+
 # processing and output for the state of New Mexico due to data lacking important data that breaks .csv input
 def output_nm(state, num_gen, out_csv, state_import):
     rand_addr = []
@@ -141,6 +145,7 @@ def output_nm(state, num_gen, out_csv, state_import):
             new_string += str(rand_addr[z][2])
             new_string += '\n'
     return new_string
+
 
 def csv_states(find_state, num_gen, rand_addr):
     output_data = []
@@ -196,6 +201,15 @@ def output_states(state, num_gen, out_csv, state_import):
             new_string += str(rand_addr[z][2])
             new_string += '\n'
     return new_string
+
+
+# returning the data from the connected microservice to my microservice, called in output states
+def get_microservice(state, year):
+    # adapted from: https://docs.python.org/3/howto/urllib2.html
+    open_url = urllib.request.urlopen("127.0.0.1:6001/get?state=" + state + "year=" + year)
+    micro_output = open_url.read()
+    # micro_response = json.loads(micro_output)
+    return json.loads(micro_output)
 
 
 def main(state, num_gen, out_csv):

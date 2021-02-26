@@ -1,11 +1,12 @@
 import os
 from flask import Flask
 from flask import request
-from person-generator import main
+from flask import jsonify
+from person-generator import main # this import is not working, why?
 
 webapp = Flask(__name__)
 
-@webapp.route('/', methods=['GET'])
+@webapp.route('/get', methods=['GET'])
 def listener():
     state_find = request.args.get("state")
     num_addr = request.args.get("nums")
@@ -13,4 +14,12 @@ def listener():
     if not state_find or not num_addr:
         return "Error: Missing one or both required inputs"
 
-    csv_generated = main(state_find, num_addr, return_csv)
+    adds_generated = main(state_find, num_addr, return_csv)
+    return jsonify(adds_generated)
+
+@webapp.route('/')
+def index():
+    return "This is the index"
+
+if __name__ == '__main__':
+    webapp.run(port=6001)

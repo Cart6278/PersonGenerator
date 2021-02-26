@@ -243,7 +243,7 @@ def from_csv():
 
 
 # if input from command line is received go to from_csv to process else run GUI
-if len(sys.argv) >= 2:
+if len(sys.argv) == 2:
     from_csv()
 else:
     # ------------------ GUI BEGINS HERE -------------------

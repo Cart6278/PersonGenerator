@@ -233,7 +233,14 @@ def output_states(state, num_gen, out_csv, state_import):
 # returning the data from the connected microservice to my microservice, called in output states
 def get_microservice(state, year):
     # adapted from: https://docs.python.org/3/howto/urllib2.html
-    open_url = urllib.request.urlopen("127.0.0.1:6001/get?state=" + state + "year=" + year)
+    state = state.lower()
+    str_year = str(year)
+    abbv_state = state_abbv(state)
+    cur_url = 'http://127.0.0.1:5005/?year='
+    cur_url += str_year
+    cur_url += '&state='
+    cur_url += abbv_state.upper()
+    open_url = urllib.request.urlopen(cur_url)
     micro_output = open_url.read()
     # micro_response = json.loads(micro_output)
     return json.loads(micro_output)
@@ -326,8 +333,21 @@ else:
     display_title = tk.Label(master=input_frame, text='Generated Addresses:')
     display_out = tk.Label(input_frame, bg='White', text='')
 
+    # for data from microservice
+    year_label = tk.Label(master=input_frame, text='Enter Year for Population')
+    year_gen = tk.Entry(master=input_frame, width=7)
     display_micro_title = tk.Label(master=input_frame, text='From Microservice:')
     display_micro_out = tk.Label(input_frame, bg='White', text='')
+    retrieve = tk.Button(
+        text="Retrieve",
+        width=7,
+        height=2,
+        bg='Purple',
+        fg='White',
+    )
+    # https://stackoverflow.com/questions/55343738/how-do-you-use-tkinter-to-display-the-output-of-a-function-call
+    retrieve.bind("<Button-2>", get_microservice)
+    retrieve['command'] = lambda: display_micro_out.config(text=get_microservice(state_choice.get(), int(year_gen.get())))
 
     # position of elements in window
     input_frame.pack()
@@ -340,6 +360,9 @@ else:
     display_out.pack()
     display_micro_title.pack(pady=7)
     display_micro_out.pack()
+    year_label.pack()
+    year_gen.pack()
+    retrieve.pack(pady=5)
 
     # end widget code
     window.mainloop()

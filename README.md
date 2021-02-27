@@ -22,9 +22,13 @@ To download and install Flask, in the command line enter:
 
 **ALERT:** In order for the program to access the necessary data the information from Kaggle (https://www.kaggle.com/openaddresses/openaddresses-us-west) MUST be downloaded from Kaggle directly (due to size restrictions) and unzipped in the SAME directory as the one you will run the program in. The file the downloaded information is in MUST be named "archive". If the information from Kaggle is not downloaded or in the proper directory the program will not execute properly.
 ### Run Independently in GUI or Command Line
-To run the program from a terminal enter "python" or "python3" then "person-generator.py" to launch the GUI interface. The _**Submit**_ button will return randomly selected addresses from a selected state. The _**Return**_ button will return the population of a state in a given year from an external microservice.
+To run the program from a terminal enter "python" or "python3" then "persongenerator.py" to launch the GUI interface. The _**Submit**_ button will return randomly selected addresses from a selected state. The _**Return**_ button will return the population of a state in a given year from an external microservice.
 
-If you wish to input a .csv file from the command line enter "python person-generator.py input.csv" the program will then skip the GUI and output results directly to output.csv in the same directory as the person-generator.py. 
+`$ python persongenerator.py`
+
+If you wish to input a .csv file from the command line enter "python person-generator.py input.csv", the .csv file used for input must have the header [input_state,input_number_to_generate], the program will then skip the GUI and output results directly to `output.csv` in the same directory as the person-generator.py with the header of [input_state,input_number_to_generate,output_content_type,output_content_value].
+
+`$ python persongenerator.py input.csv`
 
 **NOTE:** This method will not work for communicating with an external microservice at this time.
 

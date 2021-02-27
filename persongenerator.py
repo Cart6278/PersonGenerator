@@ -2,7 +2,6 @@
 # Person Generator
 # CS 361 - 400 Winter 2021
 from flask import Flask, json
-from flask import jsonify
 import tkinter as tk
 import pandas as panda
 import random

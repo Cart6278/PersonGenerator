@@ -147,6 +147,30 @@ def output_nm(state, num_gen, out_csv, state_import):
     return new_string
 
 
+def json_states(find_state, num_gen, rand_addr):
+    output_data = []
+    output_state = []
+    output_num = []
+    output_type = []
+    # adapted from: https://www.geeksforgeeks.org/saving-a-pandas-dataframe-as-a-csv/
+    for z in range(num_gen):
+        # set data fields in lists with given and generated data
+        output_state.append(find_state.upper().rstrip())
+        output_num.append(num_gen)
+        output_type.append('Street Address'.rstrip())
+        # strange concatenation due to [] appearing on output in output.csv
+        output_data.append(str(rand_addr[z][0]).rstrip() + ' ' + str(rand_addr[z][1]).rstrip() + ' ' +
+                           str(rand_addr[z][2]).rstrip())
+    # create dictionary to hold data, necessary for Pandas to output to csv, see reference above
+    dict_out = {'input_state': output_state, 'input_number_to_generate': output_num,
+                'output_content_type': output_type,
+                'output_content_value': output_data}
+    # convert dictionary to json: https://www.geeksforgeeks.org/how-to-convert-python-dictionary-to-json/
+    ting = panda.DataFrame(dict_out)
+    for_json = [ting.columns.values.tolist()] + ting.values.tolist()
+    return for_json
+
+
 def csv_states(find_state, num_gen, rand_addr):
     output_data = []
     output_state = []
@@ -159,7 +183,8 @@ def csv_states(find_state, num_gen, rand_addr):
         output_num.append(num_gen)
         output_type.append('Street Address')
         # strange concatenation due to [] appearing on output in output.csv
-        output_data.append(str(rand_addr[z][0]) + ' ' + str(rand_addr[z][1]) + ', ' + str(rand_addr[z][2]))
+        output_data.append(str(rand_addr[z][0]) + ' ' + str(rand_addr[z][1]) + ' ' +
+                           str(rand_addr[z][2]))
     # create dictionary to hold data, necessary for Pandas to output to csv, see reference above
     dict_out = {'input_state': output_state, 'input_number_to_generate': output_num,
                 'output_content_type': output_type,
@@ -186,7 +211,7 @@ def output_states(state, num_gen, out_csv, state_import):
     if out_csv == 1:
         return csv_states(state, num_gen, rand_addr)
     # adapted from: https://yagisanatode.com/2018/02/26/how-to-display-and-entry-in-a-label-tkinter-python-3/
-    else:
+    elif out_csv == 2:
         # in order for GUI output to work results must be in a string.
         new_string = ''
         for z in range(num_gen):
@@ -200,7 +225,9 @@ def output_states(state, num_gen, out_csv, state_import):
             new_string += ', '
             new_string += str(rand_addr[z][2])
             new_string += '\n'
-    return new_string
+        return new_string
+    else:
+        return json_states(state, num_gen, rand_addr)
 
 
 # returning the data from the connected microservice to my microservice, called in output states

@@ -14,7 +14,7 @@ def listener():
         num_addr = request.args.get("nums")
         if not state_find or not num_addr:
             return "Error: Missing one or both required inputs"
-        return_csv = 0
+        return_csv = 3
         adds_generated = main(state_find, num_addr, return_csv)
         return jsonify(adds_generated)
     if request.method == 'POST':
@@ -22,7 +22,7 @@ def listener():
         num_addr = request.args.get("nums")
         if not state_find or not num_addr:
             return "Error: Missing one or both required inputs"
-        return_csv = 0
+        return_csv = 3
         adds_generated = main(state_find, num_addr, return_csv)
         return jsonify(adds_generated)
 

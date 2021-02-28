@@ -38,6 +38,8 @@ To launch the Person Generator microservice to listen for HTTP requests enter:
 
 `$ flask run -p 6001`
 
+NOTE: For a currently undiagnosed reason, when you launch the microservice with Flask the GUI will appear. In order for the program to begin listening for GET requests you **must** close the GUI. This is a known issue and will be resolved at a later date.
+
 The microservice will then take GET requests and return a JSON response. To test this you can launch any browser and then enter: http://localhost:6001/?state=AK&nums=5
 The response in JSON should look like:
 `[["input_state","input_number_to_generate","output_content_type","output_content_value"],["AK",5,"Street Address","2147 ASPEN LN HOMER"],["AK",5,"Street Address","35170 SOARING AVE STERLING"],["AK",5,"Street Address","73280 STERLING HWY NINILCHIK"],["AK",5,"Street Address","41347 MONROE ST DIAMOND RIDGE"],["AK",5,"Street Address","50961 RAMONA RD NIKISKI"]]`
